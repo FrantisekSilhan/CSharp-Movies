@@ -22,18 +22,23 @@ foreach (Movie movie in movies2)
 
 Console.WriteLine();
 
-IList<Movie> movies3 = db.Movies.Include(x => x.Genre).Where(x => x.Name.Contains("piece")).ToList();
+IList<Movie> movies3 = db.Movies.Include(x => x.Genre).ToList();
 foreach (Movie movie in movies3)
 {
-    Console.WriteLine(string.Format("{0} {1}", movie.Name, movie.Genre.Name));
+    Console.WriteLine(string.Format("{0} {1}", movie.Name, movie.Genre!.Name));
 }
 
 Console.WriteLine();
 
-Console.WriteLine("Movie name: ");
+Movie? mov = db.Movies.Where(x => x.Id == 1).SingleOrDefault();
+if (mov != null)
+{
+    Console.WriteLine(mov.Name);
+}
+
+/*Console.WriteLine("Movie name: ");
 string newName = Console.ReadLine();
 db.Movies.Add(new Movie { Name = newName, GenreId = 1 });
-
 
 Console.WriteLine("Saving...");
 try
@@ -44,4 +49,4 @@ try
 catch (Exception ex)
 {
     Console.WriteLine(string.Format("Error: {0}", ex));
-}
+}*/
