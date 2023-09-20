@@ -1,3 +1,12 @@
 ﻿using _200923PRG.Data;
+using _200923PRG.Models;
 
-var db = new AppDbContext("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=csMovies;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+var db = new AppDbContext();
+// Add-Migration Initial
+// Update-Database
+
+IList<Movie> FirstMovies = db.Movies.ToList();
+foreach (Movie movie in FirstMovies)
+{
+    Console.WriteLine(movie.Name);
+}
