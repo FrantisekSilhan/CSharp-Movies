@@ -12,6 +12,7 @@ foreach (Movie movie in movies1)
     Console.WriteLine(movie.Name);
 }
 
+
 Console.WriteLine();
 
 IList<Movie> movies2 = db.Movies.Where(x => x.Name.Contains("piece")).ToList();
@@ -19,6 +20,7 @@ foreach (Movie movie in movies2)
 {
     Console.WriteLine(movie.Name);
 }
+
 
 Console.WriteLine();
 
@@ -28,12 +30,28 @@ foreach (Movie movie in movies3)
     Console.WriteLine(string.Format("{0} {1}", movie.Name, movie.Genre!.Name));
 }
 
+
 Console.WriteLine();
 
 Movie? mov = db.Movies.Where(x => x.Id == 1).SingleOrDefault();
+db.Entry(mov).Reference(x => x.Genre);
 if (mov != null)
 {
-    Console.WriteLine(mov.Name);
+    Console.WriteLine(string.Format("{0} {1}", mov.Name, mov.Genre.Name));
+}
+
+
+Console.WriteLine();
+
+Genre? g = db.Genres.Where(x => x.Id == 1).SingleOrDefault();
+db.Entry(g).Collection(x => x.Movies);
+if (g != null)
+{
+    Console.WriteLine(g.Name);
+    foreach (Movie movie in g.Movies)
+    {
+        Console.WriteLine(movie.Name);
+    }
 }
 
 /*Console.WriteLine("Movie name: ");

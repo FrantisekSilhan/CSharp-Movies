@@ -1,21 +1,21 @@
 ﻿using _200923PRG.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace _200923PRG.Data
 {
     internal class AppDbContext : DbContext
     {
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             base.OnConfiguring(builder);
             builder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=csMovies;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
-            builder.LogTo(Console.WriteLine, new[]
+            /*builder.LogTo(Console.WriteLine, new[]
             {
                 RelationalEventId.CommandExecuted
-            });
+            });*/
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
