@@ -12,8 +12,8 @@ using _200923PRG.Data;
 namespace _200923PRG.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230920070213_FirstMovies")]
-    partial class FirstMovies
+    [Migration("20230920073404_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,40 @@ namespace _200923PRG.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("_200923PRG.Models.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genre");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Sci-fi"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Horror"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Životopis"
+                        });
+                });
 
             modelBuilder.Entity("_200923PRG.Models.Movie", b =>
                 {
@@ -36,11 +70,16 @@ namespace _200923PRG.Migrations
                     b.Property<int?>("Duration")
                         .HasColumnType("int");
 
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
 
@@ -49,14 +88,32 @@ namespace _200923PRG.Migrations
                         {
                             Id = 1,
                             Duration = 24,
+                            GenreId = 1,
                             Name = "One Piece"
                         },
                         new
                         {
                             Id = 2,
                             Duration = 180,
+                            GenreId = 2,
                             Name = "Oppenheimer"
                         });
+                });
+
+            modelBuilder.Entity("_200923PRG.Models.Movie", b =>
+                {
+                    b.HasOne("_200923PRG.Models.Genre", "Genre")
+                        .WithMany("Movies")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("_200923PRG.Models.Genre", b =>
+                {
+                    b.Navigation("Movies");
                 });
 #pragma warning restore 612, 618
         }

@@ -13,5 +13,8 @@ namespace _200923PRG.Models
         [Required]
         public string Name { get; set; } = string.Empty;
         public int? Duration { get; set; }
+
+        public Genre Genre { get; set; }
+        public int GenreId { get; set; }
     }
 }
