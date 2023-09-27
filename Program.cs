@@ -33,7 +33,7 @@ foreach (Movie movie in movies3)
 
 Console.WriteLine();
 
-Movie? mov = db.Movies.Where(x => x.Id == 1).SingleOrDefault();
+Movie? mov = db.Movies.Where(x => x.MovieId == 1).SingleOrDefault();
 db.Entry(mov).Reference(x => x.Genre);
 if (mov != null)
 {
@@ -43,7 +43,7 @@ if (mov != null)
 
 Console.WriteLine();
 
-Genre? g = db.Genres.Where(x => x.Id == 1).SingleOrDefault();
+Genre? g = db.Genres.Where(x => x.GenreId == 1).SingleOrDefault();
 db.Entry(g).Collection(x => x.Movies);
 if (g != null)
 {
